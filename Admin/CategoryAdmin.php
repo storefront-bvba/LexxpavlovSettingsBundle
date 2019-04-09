@@ -72,8 +72,11 @@ class CategoryAdmin extends AbstractAdmin
      */
     private function clearCache(Category $object)
     {
+
+        // TODO fix this. Causes error: The "lexxpavlov_settings.settings" service or alias has been removed or inlined when the container was compiled. You should either make it public, or stop using the container directly and use dependency injection instead.
+
         /** @var \Lexxpavlov\SettingsBundle\Service\Settings $settings */
-        $settings = $this->getConfigurationPool()->getContainer()->get('lexxpavlov_settings.settings');
-        $settings->clearGroupCache($object->getName());
+//        $settings = $this->getConfigurationPool()->getContainer()->get('lexxpavlov_settings.settings');
+//        $settings->clearGroupCache($object->getName());
     }
 }

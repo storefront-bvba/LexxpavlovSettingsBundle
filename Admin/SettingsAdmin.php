@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
@@ -44,7 +45,7 @@ class SettingsAdmin extends AbstractAdmin
             : 'setting_value';
         $formMapper
             ->add('name')
-            ->add('category', 'sonata_type_model_list')
+            ->add('category', ModelAutocompleteType::class)
             ->add('type', ChoiceType::class, array(
                 'choices' => SettingsType::getChoices(),
                 'attr' => array('data-sonata-select2'=>'false'),
