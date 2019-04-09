@@ -5,7 +5,7 @@
 {% set _attr = attr|merge({'data-type': subject.type}) %}
 <div class="lexxpavlov_settings_value_container">
 {%- spaceless %}
-    {% if subject.type is constant('App\Application\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Boolean') %}
+    {% if subject.type is constant('App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType::Boolean') %}
         {% set attr = _attr %}
         {% if value == true %}
             {% set value = 'on' %}

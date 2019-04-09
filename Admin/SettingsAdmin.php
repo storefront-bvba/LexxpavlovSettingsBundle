@@ -45,7 +45,7 @@ class SettingsAdmin extends AbstractAdmin
             : 'setting_value';
         $formMapper
             ->add('name')
-            ->add('category', ModelAutocompleteType::class)
+            //->add('category', ModelAutocompleteType::class, ['property' => 'name'])
             ->add('type', ChoiceType::class, array(
                 'choices' => SettingsType::getChoices(),
                 'attr' => array('data-sonata-select2'=>'false'),
