@@ -3,6 +3,7 @@
 namespace App\Application\Lexxpavlov\SettingsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -21,7 +22,7 @@ class Settings extends AbstractType
         $builder
             ->add('category', 'entity', array('class' => 'LexxpavlovSettingsBundle:Category', 'property_path' => 'name', 'required' => false))
             ->add('name', 'text')
-            ->add('type', 'choice', array('choices' => SettingsType::getChoices()))
+            ->add('type', ChoiceType::class, array('choices' => SettingsType::getChoices()))
             ->add('value', $valueType)
             ->add('comment', 'textarea', array('required' => false))
             ->add('save', 'submit')
