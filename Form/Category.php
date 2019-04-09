@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Form;
+namespace App\Application\Lexxpavlov\SettingsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ class Category extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Lexxpavlov\\SettingsBundle\\Entity\\Category',
+            'data_class' => \App\Application\Lexxpavlov\SettingsBundle\Entity\Category::class,
         ));
     }
 

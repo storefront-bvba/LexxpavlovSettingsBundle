@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Cache;
+namespace App\Application\Lexxpavlov\SettingsBundle\Cache;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -18,7 +18,7 @@ class CacheFactory
     public static function createByName($serviceName, ContainerInterface $container)
     {
         $service = $container->get($serviceName, ContainerInterface::NULL_ON_INVALID_REFERENCE);
-        return is_null($service) ? null : self::create($service);
+        return $service === null ? null : self::create($service);
     }
 
     /**

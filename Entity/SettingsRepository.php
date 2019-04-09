@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Entity;
+namespace App\Application\Lexxpavlov\SettingsBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

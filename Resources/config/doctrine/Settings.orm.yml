@@ -1,7 +1,7 @@
-Lexxpavlov\SettingsBundle\Entity\Settings:
+App\Application\Lexxpavlov\SettingsBundle\Entity\Settings:
     type: entity
     table: lexxpavlov_settings
-    repositoryClass: Lexxpavlov\SettingsBundle\Entity\SettingsRepository
+    repositoryClass: App\Application\Lexxpavlov\SettingsBundle\Entity\SettingsRepository
     indexes:
         name_idx:
             columns: [ name ]
@@ -26,4 +26,4 @@ Lexxpavlov\SettingsBundle\Entity\Settings:
             nullable: true
     manyToOne:
         category:
-            targetEntity: Lexxpavlov\SettingsBundle\Entity\Category
+            targetEntity: App\Application\Lexxpavlov\SettingsBundle\Entity\Category

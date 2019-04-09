@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Cache;
+namespace App\Application\Lexxpavlov\SettingsBundle\Cache;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 

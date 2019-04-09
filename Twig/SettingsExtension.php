@@ -1,10 +1,12 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Twig;
+namespace App\Application\Lexxpavlov\SettingsBundle\Twig;
 
-use Lexxpavlov\SettingsBundle\Service\Settings;
+use App\Application\Lexxpavlov\SettingsBundle\Service\Settings;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SettingsExtension extends \Twig_Extension
+class SettingsExtension extends AbstractExtension
 {
     /** @var Settings */
     private $settings;
@@ -25,8 +27,8 @@ class SettingsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('settings', array($this, 'getSettings')),
-            new \Twig_SimpleFunction('settings_group', array($this, 'getSettingsGroup')),
+            new TwigFunction('settings', array($this, 'getSettings')),
+            new TwigFunction('settings_group', array($this, 'getSettingsGroup')),
         );
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Service;
+namespace App\Application\Lexxpavlov\SettingsBundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use Lexxpavlov\SettingsBundle\Cache\AdapterCacheInterface;
-use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
-use Lexxpavlov\SettingsBundle\Entity\Category;
-use Lexxpavlov\SettingsBundle\Entity\Settings as SettingsEntity;
-use Lexxpavlov\SettingsBundle\Entity\SettingsRepository;
+use App\Application\Lexxpavlov\SettingsBundle\Cache\AdapterCacheInterface;
+use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use App\Application\Lexxpavlov\SettingsBundle\Entity\Category;
+use App\Application\Lexxpavlov\SettingsBundle\Entity\Settings as SettingsEntity;
+use App\Application\Lexxpavlov\SettingsBundle\Entity\SettingsRepository;
 
 /**
  * Class Settings
@@ -37,7 +37,7 @@ class Settings
             $this->cache = $cache;
         }
         $this->em = $em;
-        $this->repository = $em->getRepository('Lexxpavlov\SettingsBundle\Entity\Settings');
+        $this->repository = $em->getRepository(SettingsEntity::class);
     }
 
     private function getCacheKey($name)

@@ -10,9 +10,9 @@
         "email" : "lexx.pavlov@gmail.com"
     }],
     "require" : {
-        "php": ">=5.4",
-        "symfony/symfony": ">=2.6",
-        "fresh/doctrine-enum-bundle": ">=4.8"
+        "php": "^7.1",
+        "symfony/symfony": "^4.2",
+        "fresh/doctrine-enum-bundle": "^6.3"
     },
     "suggest": {
         "sonata-project/admin-bundle": "Allow configure settings with administration panel",

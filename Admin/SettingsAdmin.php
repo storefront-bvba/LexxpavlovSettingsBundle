@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexxpavlov\SettingsBundle\Admin;
+namespace App\Application\Lexxpavlov\SettingsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -8,9 +8,10 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
-use Lexxpavlov\SettingsBundle\Entity\Settings;
-use Lexxpavlov\SettingsBundle\Entity\Category;
+use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use App\Application\Lexxpavlov\SettingsBundle\Entity\Settings;
+use App\Application\Lexxpavlov\SettingsBundle\Entity\Category;
+use App\Application\Lexxpavlov\SettingsBundle\Form\Type\SettingValueType;
 
 class SettingsAdmin extends AbstractAdmin
 {
@@ -38,7 +39,7 @@ class SettingsAdmin extends AbstractAdmin
     public function configureFormFields(FormMapper $formMapper)
     {
         $valueType = $this->isNewForm()
-            ? 'Lexxpavlov\SettingsBundle\Form\Type\SettingValueType'
+            ? SettingValueType::class
             : 'setting_value';
         $formMapper
             ->add('name')
