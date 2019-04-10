@@ -7,6 +7,7 @@ services:
             - ~
             - App\Application\Lexxpavlov\SettingsBundle\Entity\Category
             - ~
+            - '@lexxpavlov_settings.settings'
         calls:
             - [ setTranslationDomain, [messages]]
 
@@ -18,5 +19,6 @@ services:
             - ~
             - App\Application\Lexxpavlov\SettingsBundle\Entity\Settings
             - ~
+            - '@lexxpavlov_settings.settings'
         calls:
             - [ setTranslationDomain, [messages]]
