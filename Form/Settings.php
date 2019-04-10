@@ -19,12 +19,12 @@ class Settings extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $valueType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? SettingValueType::class : 'setting_value';
 
-        $builder->add('category', EntityType::class, array(
-            'class' => \App\Application\Lexxpavlov\SettingsBundle\Entity\Category::class,
-            //'property' => 'name',
-            'property_path' => 'name',
-            'required' => false
-        ));
+//        $builder->add('category', EntityType::class, array(
+//            'class' => \App\Application\Lexxpavlov\SettingsBundle\Entity\Category::class,
+//            //'property' => 'name',
+//            'property_path' => 'name',
+//            'required' => false
+//        ));
         $builder->add('name', TextType::class);
         $builder->add('type', ChoiceType::class, array('choices' => SettingsType::getChoices()));
         $builder->add('value', $valueType);
