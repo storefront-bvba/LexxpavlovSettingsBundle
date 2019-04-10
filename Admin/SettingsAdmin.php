@@ -30,25 +30,25 @@ class SettingsAdmin extends AbstractAdmin {
         $useCategoryComment = $this->getConfigurationPool()->getContainer()->getParameter('lexxpavlov_settings.use_category_comment');
 
         $listMapper->addIdentifier('name')->add('category', null, array(
-                'associated_property' => function (Category $cat) use ($useCategoryComment) {
-                    return $useCategoryComment && $cat->getComment() ? $cat->getComment() : $cat->getName();
-                },
-                'sortable' => true,
-                'sort_field_mapping' => array('fieldName' => 'name'),
-                'sort_parent_association_mappings' => array(array('fieldName' => 'category'))
-            ))->add('type', ChoiceType::class, array(
-                'choices' => SettingsType::getReadableValues(),
-                'catalogue' => 'messages'
-            ))->add('value', null, array('template' => 'LexxpavlovSettingsBundle:Admin:list_value.html.twig'))->add('comment');
+            'associated_property' => function (Category $cat) use ($useCategoryComment) {
+                return $useCategoryComment && $cat->getComment() ? $cat->getComment() : $cat->getName();
+            },
+            'sortable' => true,
+            'sort_field_mapping' => array('fieldName' => 'name'),
+            'sort_parent_association_mappings' => array(array('fieldName' => 'category'))
+        ))->add('type', ChoiceType::class, array(
+            'choices' => SettingsType::getReadableValues(),
+            'catalogue' => 'messages'
+        ))->add('value', null, array('template' => 'LexxpavlovSettingsBundle:Admin:list_value.html.twig'))->add('comment');
     }
 
     public function configureFormFields(FormMapper $formMapper) {
         $valueType = $this->isNewForm() ? SettingValueType::class : 'setting_value';
         $formMapper->add('name')//->add('category', ModelAutocompleteType::class, ['property' => 'name'])
-            ->add('type', ChoiceType::class, array(
-                'choices' => SettingsType::getChoices(),
-                'attr' => array('data-sonata-select2' => 'false'),
-            ))->add('value', $valueType)->add('comment');
+        ->add('type', ChoiceType::class, array(
+            'choices' => SettingsType::getChoices(),
+            'attr' => array('data-sonata-select2' => 'false'),
+        ))->add('value', $valueType)->add('comment');
     }
 
     public function configureDatagridFilters(DatagridMapper $datagridMapper) {

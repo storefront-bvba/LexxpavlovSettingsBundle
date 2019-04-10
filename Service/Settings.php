@@ -13,8 +13,7 @@ use App\Application\Lexxpavlov\SettingsBundle\Entity\SettingsRepository;
  * Class Settings
  * @package Lexxpavlov\SettingsBundle\Service
  */
-class Settings
-{
+class Settings {
     /** @var EntityManager */
     private $em;
 
@@ -31,8 +30,7 @@ class Settings
      * @param EntityManager $em
      * @param AdapterCacheInterface|null $cache
      */
-    public function __construct(EntityManager $em, $cache)
-    {
+    public function __construct(EntityManager $em, $cache) {
         if ($cache instanceof AdapterCacheInterface) {
             $this->cache = $cache;
         }
@@ -40,18 +38,15 @@ class Settings
         $this->repository = $em->getRepository(SettingsEntity::class);
     }
 
-    private function getCacheKey($name)
-    {
+    private function getCacheKey($name) {
         return 'lexxpavlov_settings_' . $name;
     }
 
-    private function getCacheGroupKey($name)
-    {
+    private function getCacheGroupKey($name) {
         return 'lexxpavlov_settings_category_' . $name;
     }
 
-    private function fetch($name)
-    {
+    private function fetch($name) {
         $setting = $this->repository->findOneBy(array('name' => $name));
         if ($setting) {
             return $setting->getValue();
@@ -60,8 +55,7 @@ class Settings
         return null;
     }
 
-    private function fetchGroup($name)
-    {
+    private function fetchGroup($name) {
         $list = $this->repository->getGroup($name);
 
         $settings = array();
@@ -72,8 +66,7 @@ class Settings
         return $settings;
     }
 
-    private function load($name)
-    {
+    private function load($name) {
         if ($this->cache) {
             $cacheKey = $this->getCacheKey($name);
             $value = $this->cache->get($cacheKey);
@@ -87,8 +80,7 @@ class Settings
         }
     }
 
-    private function loadGroup($name)
-    {
+    private function loadGroup($name) {
         if ($this->cache) {
             $cacheKey = $this->getCacheGroupKey($name);
             $values = $this->cache->get($cacheKey);
@@ -106,25 +98,28 @@ class Settings
      * Get one setting
      *
      * @param string $name Setting name or group name (if $subname is set)
-     * @param string|null $subname Setting name (use with $name as group name)
-     * @param mixed|null $default The default value if the setting key does not exist
+     * @param null $typeIfNew
+     * @param null $commentIfNew
+     * @param null $defaultValue
      * @return mixed
      */
-    public function get($name, $subname = null, $default = null)
-    {
-        if ($subname) {
-            $group = $this->group($name);
-            if (isset($group[$subname])) {
-                return $group[$subname];
-            }
-        } else {
-            if (!isset($this->settings[$name])) {
-                $this->settings[$name] = $this->load($name);
-            }
-            return $this->settings[$name];
-        }
+    public function get($name, $typeIfNew = null, $commentIfNew = null, $defaultValue = null) {
 
-        return $default;
+        if (!isset($this->settings[$name])) {
+            $value = $this->load($name);
+            if ($value === null) {
+                // Auto create missing setting. Can be edited later.
+                $this->create(null, $name, $typeIfNew, $defaultValue, $commentIfNew);
+                $value = $defaultValue;
+                if ($value === null) {
+                    // Prevent duplicates
+                    $value = '';
+                }
+            }
+            $this->settings[$name] = $value;
+        }
+        return $this->settings[$name];
+
     }
 
     /**
@@ -133,8 +128,7 @@ class Settings
      * @param string $name Group name
      * @return array
      */
-    public function group($name)
-    {
+    public function group($name) {
         if (!isset($this->groups[$name])) {
             $this->groups[$name] = $this->loadGroup($name);
         }
@@ -146,8 +140,7 @@ class Settings
      *
      * @param SettingsEntity $setting
      */
-    public function save(SettingsEntity $setting)
-    {
+    public function save(SettingsEntity $setting) {
         if ($setting) {
             $this->repository->save($setting);
         }
@@ -158,8 +151,7 @@ class Settings
      *
      * @param Category $category
      */
-    public function saveGroup(Category $category)
-    {
+    public function saveGroup(Category $category) {
         if ($category) {
             $this->saveCategory($category);
         }
@@ -178,8 +170,7 @@ class Settings
      * @param string|mixed $subname
      * @param null|mixed $value
      */
-    public function update($name, $subname, $value = null)
-    {
+    public function update($name, $subname, $value = null) {
         if (!is_null($value)) {
             $category = $this->getCategory($name);
             $name = $subname;
@@ -189,7 +180,10 @@ class Settings
         }
 
         /** @var SettingsEntity $setting */
-        $setting = $this->repository->findOneBy(array('category' => $category, 'name' => $name));
+        $setting = $this->repository->findOneBy(array(
+            'category' => $category,
+            'name' => $name
+        ));
         $setting->setValue($value);
         $this->repository->save($setting);
 
@@ -212,8 +206,7 @@ class Settings
      * @param string $comment Comment
      * @return SettingsEntity
      */
-    public function create($category, $name, $type, $value, $comment = null)
-    {
+    public function create($category, $name, $type, $value, $comment = null) {
         if (!in_array($type, SettingsType::getValues())) {
             $types = implode(', ', SettingsType::getValues());
             throw new \InvalidArgumentException("Invalid type \"$type\". Type must be one of $types");
@@ -224,13 +217,7 @@ class Settings
 
         /** @var SettingsEntity $setting */
         $setting = new SettingsEntity();
-        $setting
-            ->setCategory($category)
-            ->setType($type)
-            ->setName($name)
-            ->setValue($value)
-            ->setComment($comment)
-        ;
+        $setting->setCategory($category)->setType($type)->setName($name)->setValue($value)->setComment($comment);
         $this->repository->save($setting);
 
         if ($category) {
@@ -250,13 +237,9 @@ class Settings
      * @param string $name Name of new category
      * @param string|null $comment Optional comment
      */
-    public function createGroup($name, $comment = null)
-    {
+    public function createGroup($name, $comment = null) {
         $category = new Category();
-        $category
-            ->setName($name)
-            ->setComment($comment)
-        ;
+        $category->setName($name)->setComment($comment);
         $this->saveCategory($category);
         $this->clearGroupCache($category->getName());
     }
@@ -265,9 +248,10 @@ class Settings
      * @param string $name
      * @return Category|null
      */
-    private function getCategory($name)
-    {
-        if (!$name) return null;
+    private function getCategory($name) {
+        if (!$name) {
+            return null;
+        }
         $category = $this->em->getRepository('LexxpavlovSettingsBundle:Category')->findOneBy(array('name' => $name));
         if (!$category) {
             $category = new Category();
@@ -281,8 +265,7 @@ class Settings
      * @param Category $category
      * @return Category
      */
-    private function saveCategory(Category $category)
-    {
+    private function saveCategory(Category $category) {
         if ($category) {
             $this->em->persist($category);
             $this->em->flush();
@@ -296,8 +279,7 @@ class Settings
      * @param string $name Name of setting
      * @return bool
      */
-    public function clearCache($name)
-    {
+    public function clearCache($name) {
         if ($this->cache) {
             return $this->cache->delete($this->getCacheKey($name));
         }
@@ -310,8 +292,7 @@ class Settings
      * @param string $name Name of category
      * @return bool
      */
-    public function clearGroupCache($name)
-    {
+    public function clearGroupCache($name) {
         if ($this->cache) {
             return $this->cache->delete($this->getCacheGroupKey($name));
         }

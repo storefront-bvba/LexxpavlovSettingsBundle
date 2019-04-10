@@ -27,18 +27,18 @@ class SettingsExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('settings', array($this, 'getSettings')),
-            new TwigFunction('settings_group', array($this, 'getSettingsGroup')),
+            new TwigFunction('setting', array($this, 'getSetting')),
+            //new TwigFunction('settings_group', array($this, 'getSettingsGroup')),
         );
     }
 
-    public function getSettings($name, $subname = null)
+    public function getSetting($name, $type = 'string', $comment = null, $defaultValue = null)
     {
-        return $this->settings->get($name, $subname);
+        return $this->settings->get($name, $type, $comment, $defaultValue);
     }
 
-    public function getSettingsGroup($name)
-    {
-        return $this->settings->group($name);
-    }
+//    public function getSettingsGroup($name)
+//    {
+//        return $this->settings->group($name);
+//    }
 }
