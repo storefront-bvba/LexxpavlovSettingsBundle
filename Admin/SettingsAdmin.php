@@ -120,12 +120,14 @@ class SettingsAdmin extends AbstractAdmin
      */
     private function clearCache(Settings $object)
     {
-        /** @var \Lexxpavlov\SettingsBundle\Service\Settings $settings */
-        $settings = $this->getConfigurationPool()->getContainer()->get('lexxpavlov_settings.settings');
-        $settings->clearCache($object->getName());
-        if ($object->getCategory()) {
-            $settings->clearGroupCache($object->getCategory()->getName());
-        }
+        // TODO This doesnt work, just like with the categories
+
+//        /** @var \Lexxpavlov\SettingsBundle\Service\Settings $settings */
+//        $settings = $this->getConfigurationPool()->getContainer()->get('lexxpavlov_settings.settings');
+//        $settings->clearCache($object->getName());
+//        if ($object->getCategory()) {
+//            $settings->clearGroupCache($object->getCategory()->getName());
+//        }
     }
 
     /**
