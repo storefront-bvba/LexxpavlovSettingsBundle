@@ -1,6 +1,10 @@
+##CHANGED BY STOREFRONT
+- Settings are auto-created on first use in Twig templates
+- Hidden the "Category" feature. Not really useful.
+- Fixed Symfony 4.2 support 
+
 LexxpavlovSettingsBundle
 ========================
-
 This bundle helps you to manage your settings in Symfony2/3 project.
 
 Settings has one of types: Boolean, Integer, Float, String, Text, Html. You may get one concrete setting or fetch group
