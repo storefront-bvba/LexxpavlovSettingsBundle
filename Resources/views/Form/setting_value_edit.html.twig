@@ -29,14 +29,17 @@
         {% set attr = _attr %}
         {{ block('form_widget_simple') }}
     {% endif %}
-    {% if subject.type is constant('\\App\\Application\\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Text') %}
+    {% if subject.type is constant('\\App\\Application\\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Text') or subject.type is constant('\\App\\Application\\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Html') %}
         {% set attr = _attr %}
         {{ block('textarea_widget') }}
     {% endif %}
-    {% if subject.type is constant('\\App\\Application\\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Html') %}
+
+    {# TODO CKEDITOR IS BROKEN, so disabled it for now... #}
+    {% if false and subject.type is constant('\\App\\Application\\Lexxpavlov\\SettingsBundle\\DBAL\\SettingsType::Html') %}
         {% set attr = _attr %}
         {{ block(html_widget ? html_widget~'_widget': 'textarea_widget') }}
     {% endif %}
+
 {% endspaceless %}
 </div>
 {% set value = null %}
