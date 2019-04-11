@@ -18,7 +18,7 @@
         "egeloen/ckeditor-bundle": "Allow use ckeditor for Html value"
     },
     "autoload" : {
-        "psr-4" : { "App\\Application\\Lexxpavlov\\SettingsBundle\\" : "" }
+        "psr-4" : { "Lexxpavlov\\SettingsBundle\\" : "" }
     },
     "extra" : {
         "branch-alias" : {
