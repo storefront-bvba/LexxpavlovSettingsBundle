@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\DBAL;
+namespace Lexxpavlov\SettingsBundle\DBAL;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\DependencyInjection;
+namespace Lexxpavlov\SettingsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

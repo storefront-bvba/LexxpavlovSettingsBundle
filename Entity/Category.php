@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Entity;
+namespace Lexxpavlov\SettingsBundle\Entity;
 
 class Category
 {

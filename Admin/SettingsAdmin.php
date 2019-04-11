@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Admin;
+namespace Lexxpavlov\SettingsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -9,10 +9,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
-use App\Application\Lexxpavlov\SettingsBundle\Entity\Settings;
-use App\Application\Lexxpavlov\SettingsBundle\Entity\Category;
-use App\Application\Lexxpavlov\SettingsBundle\Form\Type\SettingValueType;
+use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use Lexxpavlov\SettingsBundle\Entity\Settings;
+use Lexxpavlov\SettingsBundle\Entity\Category;
+use Lexxpavlov\SettingsBundle\Form\Type\SettingValueType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SettingsAdmin extends AbstractAdmin {
@@ -21,7 +21,7 @@ class SettingsAdmin extends AbstractAdmin {
      */
     private $settingsService;
 
-    public function __construct($code, $class, $baseControllerName, \App\Application\Lexxpavlov\SettingsBundle\Service\Settings $settingsService) {
+    public function __construct($code, $class, $baseControllerName, \Lexxpavlov\SettingsBundle\Service\Settings $settingsService) {
         parent::__construct($code, $class, $baseControllerName);
         $this->settingsService = $settingsService;
     }

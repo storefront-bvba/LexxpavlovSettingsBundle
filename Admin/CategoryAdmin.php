@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Admin;
+namespace Lexxpavlov\SettingsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -8,12 +8,12 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-use App\Application\Lexxpavlov\SettingsBundle\Entity\Category;
+use Lexxpavlov\SettingsBundle\Entity\Category;
 
 class CategoryAdmin extends AbstractAdmin {
     private $settingsService;
 
-    public function __construct($code, $class, $baseControllerName, \App\Application\Lexxpavlov\SettingsBundle\Service\Settings $settingsService) {
+    public function __construct($code, $class, $baseControllerName, \Lexxpavlov\SettingsBundle\Service\Settings $settingsService) {
         $this->settingsService = $settingsService;
         parent::__construct($code, $class, $baseControllerName);
     }

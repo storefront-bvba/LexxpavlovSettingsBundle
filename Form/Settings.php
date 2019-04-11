@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Form;
+namespace Lexxpavlov\SettingsBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,15 +12,15 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
-use App\Application\Lexxpavlov\SettingsBundle\Form\Type\SettingValueType;
+use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use Lexxpavlov\SettingsBundle\Form\Type\SettingValueType;
 
 class Settings extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $valueType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ? SettingValueType::class : 'setting_value';
 
 //        $builder->add('category', EntityType::class, array(
-//            'class' => \App\Application\Lexxpavlov\SettingsBundle\Entity\Category::class,
+//            'class' => \Lexxpavlov\SettingsBundle\Entity\Category::class,
 //            //'property' => 'name',
 //            'property_path' => 'name',
 //            'required' => false
@@ -38,7 +38,7 @@ class Settings extends AbstractType {
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Application\Lexxpavlov\SettingsBundle\Entity\Settings',
+            'data_class' => 'Lexxpavlov\SettingsBundle\Entity\Settings',
         ));
     }
 

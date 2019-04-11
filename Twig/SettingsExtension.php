@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Twig;
+namespace Lexxpavlov\SettingsBundle\Twig;
 
-use App\Application\Lexxpavlov\SettingsBundle\Service\Settings;
+use Lexxpavlov\SettingsBundle\Service\Settings;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

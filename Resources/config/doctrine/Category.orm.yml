@@ -1,4 +1,4 @@
-App\Application\Lexxpavlov\SettingsBundle\Entity\Category:
+Lexxpavlov\SettingsBundle\Entity\Category:
     type: entity
     table: lexxpavlov_settings_categories
     id:

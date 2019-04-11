@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Cache;
+namespace Lexxpavlov\SettingsBundle\Cache;
 
 use Doctrine\Common\Cache\CacheProvider;
 

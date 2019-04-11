@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Entity;
+namespace Lexxpavlov\SettingsBundle\Entity;
 
-use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
 
 class Settings
 {

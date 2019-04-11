@@ -1,27 +1,27 @@
 services:
     lexxpavlov_settings.cache_provider:
         class: AdapterCacheInterface
-        factory: [App\Application\Lexxpavlov\SettingsBundle\Cache\CacheFactory, createByName]
+        factory: [Lexxpavlov\SettingsBundle\Cache\CacheFactory, createByName]
         arguments:
             - "%lexxpavlov_settings.cache_provider%"
             - "@service_container"
 
     lexxpavlov_settings.settings:
-        class: App\Application\Lexxpavlov\SettingsBundle\Service\Settings
+        class: Lexxpavlov\SettingsBundle\Service\Settings
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@lexxpavlov_settings.cache_provider"
             - '@lexik_translation.locale.manager'
 
     lexxpavlov_settings.twig.settings:
-        class: App\Application\Lexxpavlov\SettingsBundle\Twig\SettingsExtension
+        class: Lexxpavlov\SettingsBundle\Twig\SettingsExtension
         arguments:
             - "@lexxpavlov_settings.settings"
         tags: [{ name: twig.extension }]
         public: false
 
     lexxpavlov_settings.form.type.setting_value:
-        class: App\Application\Lexxpavlov\SettingsBundle\Form\Type\SettingValueType
+        class: Lexxpavlov\SettingsBundle\Form\Type\SettingValueType
         arguments:
             - "@service_container"
             - "%lexxpavlov_settings.html_widget%"
@@ -29,9 +29,9 @@ services:
             - { name: form.type, alias: setting_value }
 
     lexxpavlov_settings.form.settings:
-        class: App\Application\Lexxpavlov\SettingsBundle\Form\Settings
+        class: Lexxpavlov\SettingsBundle\Form\Settings
         tags: [{ name: form.type, alias: lexxpavlov_settings }]
 
     lexxpavlov_settings.form.category:
-        class: App\Application\Lexxpavlov\SettingsBundle\Form\Category
+        class: Lexxpavlov\SettingsBundle\Form\Category
         tags: [{ name: form.type, alias: lexxpavlov_settings_category }]

@@ -281,7 +281,7 @@ twig:
 ##### Manual create and update settings
 
 ```php
-use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
+use Lexxpavlov\SettingsBundle\DBAL\SettingsType;
 
 // In controller:
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Lexxpavlov\SettingsBundle\Form;
+namespace Lexxpavlov\SettingsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,7 +28,7 @@ class Category extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => \App\Application\Lexxpavlov\SettingsBundle\Entity\Category::class,
+            'data_class' => \Lexxpavlov\SettingsBundle\Entity\Category::class,
         ));
     }
 
