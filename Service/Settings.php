@@ -8,6 +8,7 @@ use App\Application\Lexxpavlov\SettingsBundle\DBAL\SettingsType;
 use App\Application\Lexxpavlov\SettingsBundle\Entity\Category;
 use App\Application\Lexxpavlov\SettingsBundle\Entity\Settings as SettingsEntity;
 use App\Application\Lexxpavlov\SettingsBundle\Entity\SettingsRepository;
+use Lexik\Bundle\TranslationBundle\Manager\LocaleManagerInterface;
 
 /**
  * Class Settings
@@ -27,15 +28,21 @@ class Settings {
     private $groups = array();
 
     /**
+     * @var LocaleManagerInterface
+     */
+    private $localeManager;
+
+    /**
      * @param EntityManager $em
      * @param AdapterCacheInterface|null $cache
      */
-    public function __construct(EntityManager $em, $cache) {
+    public function __construct(EntityManager $em, $cache, LocaleManagerInterface $localeManager) {
         if ($cache instanceof AdapterCacheInterface) {
             $this->cache = $cache;
         }
         $this->em = $em;
         $this->repository = $em->getRepository(SettingsEntity::class);
+        $this->localeManager = $localeManager;
     }
 
     private function getCacheKey($name) {
@@ -101,24 +108,32 @@ class Settings {
      * @param null $typeIfNew
      * @param null $commentIfNew
      * @param null $defaultValue
+     * @param null $langCode
      * @return mixed
      */
-    public function get($name, $typeIfNew = null, $commentIfNew = null, $defaultValue = null) {
+    public function get($name, $typeIfNew = null, $commentIfNew = null, $defaultValue = null, $langCode = null) {
+        if ($langCode === null) {
+            $key = $name;
+        } else {
+            $key = $name . '_' . strtolower($langCode);
+        }
 
-        if (!isset($this->settings[$name])) {
-            $value = $this->load($name);
+        if (!isset($this->settings[$key])) {
+            $value = $this->load($key);
+
             if ($value === null) {
                 // Auto create missing setting. Can be edited later.
-                $this->create(null, $name, $typeIfNew, $defaultValue, $commentIfNew);
+                $this->create(null, $name, $typeIfNew, $defaultValue, $commentIfNew, $langCode !== null);
                 $value = $defaultValue;
                 if ($value === null) {
                     // Prevent duplicates
                     $value = '';
                 }
             }
-            $this->settings[$name] = $value;
+
+            $this->settings[$key] = $value;
         }
-        return $this->settings[$name];
+        return $this->settings[$key];
 
     }
 
@@ -204,9 +219,9 @@ class Settings {
      * @param string $type Type
      * @param mixed $value Value
      * @param string $comment Comment
-     * @return SettingsEntity
+     * @return SettingsEntity | SettingsEntity[]
      */
-    public function create($category, $name, $type, $value, $comment = null) {
+    public function create($category, $name, $type, $value, $comment = null, $isMultiLanguage = false) {
         if (!in_array($type, SettingsType::getValues())) {
             $types = implode(', ', SettingsType::getValues());
             throw new \InvalidArgumentException("Invalid type \"$type\". Type must be one of $types");
@@ -215,10 +230,38 @@ class Settings {
         /** @var Category $category */
         $category = $this->getCategory($category);
 
-        /** @var SettingsEntity $setting */
-        $setting = new SettingsEntity();
-        $setting->setCategory($category)->setType($type)->setName($name)->setValue($value)->setComment($comment);
-        $this->repository->save($setting);
+
+        if ($isMultiLanguage) {
+            // Create a setting for each language
+            $managedLangs = $this->localeManager->getLocales();
+            $createdSettings = [];
+            foreach ($managedLangs as $managedLang) {
+                $lowercaseLang = strtolower($managedLang);
+                $uppercaseLang = strtoupper($managedLang);
+
+                $key = $name . '_' . $lowercaseLang;
+                if($comment) {
+                    $comment .= ' (' . $uppercaseLang . ')';
+                }else{
+                    $comment = $uppercaseLang;
+                }
+
+                if($this->load($key) === null){
+                    // Does not exist yet, auto-create for this language
+                    $setting = new SettingsEntity();
+                    $setting->setCategory($category)->setType($type)->setName($key)->setValue($value)->setComment($comment);
+                    $this->repository->save($setting);
+                    $createdSettings[] = $setting;
+                }
+            }
+            return $createdSettings;
+
+        } else {
+            /** @var SettingsEntity $setting */
+            $setting = new SettingsEntity();
+            $setting->setCategory($category)->setType($type)->setName($name)->setValue($value)->setComment($comment);
+            $this->repository->save($setting);
+        }
 
         if ($category) {
             $this->groups[$category->getName()][$name] = $value;

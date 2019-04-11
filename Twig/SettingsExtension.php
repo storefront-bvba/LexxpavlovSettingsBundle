@@ -32,9 +32,9 @@ class SettingsExtension extends AbstractExtension
         );
     }
 
-    public function getSetting($name, $type = 'string', $comment = null, $defaultValue = null)
+    public function getSetting($name, $type = 'string', $comment = null, $defaultValue = null, $langCode = null)
     {
-        return $this->settings->get($name, $type, $comment, $defaultValue);
+        return $this->settings->get($name, $type, $comment, $defaultValue, $langCode);
     }
 
 //    public function getSettingsGroup($name)

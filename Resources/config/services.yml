@@ -11,6 +11,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@lexxpavlov_settings.cache_provider"
+            - '@lexik_translation.locale.manager'
 
     lexxpavlov_settings.twig.settings:
         class: App\Application\Lexxpavlov\SettingsBundle\Twig\SettingsExtension
