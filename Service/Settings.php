@@ -241,15 +241,15 @@ class Settings {
 
                 $key = $name . '_' . $lowercaseLang;
                 if($comment) {
-                    $comment .= ' (' . $uppercaseLang . ')';
+                    $newComment = $comment. ' (' . $uppercaseLang . ')';
                 }else{
-                    $comment = $uppercaseLang;
+                    $newComment = $uppercaseLang;
                 }
 
                 if($this->load($key) === null){
                     // Does not exist yet, auto-create for this language
                     $setting = new SettingsEntity();
-                    $setting->setCategory($category)->setType($type)->setName($key)->setValue($value)->setComment($comment);
+                    $setting->setCategory($category)->setType($type)->setName($key)->setValue($value)->setComment($newComment);
                     $this->repository->save($setting);
                     $createdSettings[] = $setting;
                 }
